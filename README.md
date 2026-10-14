@@ -1,6 +1,5 @@
 # CVPilot
 
-[![CI](https://github.com/omergazi34/cvpilot/actions/workflows/ci.yml/badge.svg)](https://github.com/omergazi34/cvpilot/actions/workflows/ci.yml)
 ![Node](https://img.shields.io/badge/node-22%2B-339933)
 ![Claude](https://img.shields.io/badge/AI-Claude%20API-8A63D2)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
