@@ -33,7 +33,8 @@ const upload = multer({
 /** Validates a free-text field. Error messages are shown to users, hence Turkish. */
 function text(value, max, name, { required = false, min = 0 } = {}) {
   const v = typeof value === 'string' ? value.trim() : '';
-  if (required && v.length < Math.max(min, 1)) throw new UserError(`${name} gerekli.`);
+  // "Required" only when empty: text that is present but short gets "too short", not "required".
+  if (required && !v) throw new UserError(`${name} gerekli.`);
   if (v && v.length < min) throw new UserError(`${name} çok kısa.`);
   if (v.length > max) throw new UserError(`${name} çok uzun (en fazla ${max.toLocaleString('tr-TR')} karakter).`);
   return v;
@@ -217,11 +218,17 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'Bulunamadı.' }));
 app.use((err, req, res, next) => {
   const status = err.status || err.statusCode || 500;
   if (status >= 500 && !err.expose) console.error(err);
-  const message = err.expose
-    ? err.message
-    : err.type === 'entity.too.large'
+  // body-parser errors are marked expose=true but carry English messages; check them first.
+  const message =
+    err.type === 'entity.too.large'
       ? 'Gönderilen veri çok büyük.'
-      : 'Sunucu hatası oluştu.';
+      : err.type === 'entity.parse.failed'
+        ? 'Geçersiz JSON gönderildi.'
+        : err instanceof UserError
+          ? err.message
+          : status < 500
+            ? 'İstek işlenemedi.'
+            : 'Sunucu hatası oluştu.';
   if (res.headersSent) return res.end();
   res.status(status).json({ error: message });
 });

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test:coverage
+      # The real server must boot in demo mode (no API key) and serve the UI and API.
+      - name: Smoke test
+        run: |
+          PORT=3123 node server.js &
+          for _ in $(seq 1 30); do curl -fs localhost:3123/api/status && break; sleep 0.5; done
+          curl -fs localhost:3123/ | grep -q "<title>"
