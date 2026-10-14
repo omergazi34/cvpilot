@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070716">
+  <meta name="description" content="CVPilot: Yapay zekâ ile ATS uyumlu CV optimizasyonu, ilana özel CV, ön yazı oluşturucu, başvuru takip paneli ve iş eşleştirme.">
+  <title>CVPilot — Yapay Zekâ ile ATS Uyumlu CV</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/landing.css">
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Arka plan: hareketli renk bulutları + ızgara -->
+  <div class="aurora" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand" aria-label="CVPilot ana sayfa">
+        <svg class="brand-logo" viewBox="0 0 32 32" aria-hidden="true">
+          <defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+          <rect width="32" height="32" rx="9" fill="url(#lg1)"/>
+          <path d="M10 8.5h8l4 4V23a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 9 23V10a1.5 1.5 0 0 1 1-1.5z" fill="#fff" opacity=".95"/>
+          <path d="M12.5 17.2l2.4 2.4 4.6-5" fill="none" stroke="#6d28d9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>CV<b>Pilot</b></span>
+      </a>
+      <nav class="nav-links" aria-label="Ana menü">
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#nasil">Nasıl Çalışır</a>
+        <a href="#guvenlik">Güvenlik</a>
+        <a href="#fiyat">Fiyatlandırma</a>
+        <a href="#sss">SSS</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="/app.html" class="btn btn-primary btn-sm magnetic">Uygulamayı Aç <svg class="ico ico-sm"><use href="/icons.svg#arrow-right"/></svg></a>
+        <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav>
+      <a href="#ozellikler" style="--i:0">Özellikler</a>
+      <a href="#nasil" style="--i:1">Nasıl Çalışır</a>
+      <a href="#guvenlik" style="--i:2">Güvenlik</a>
+      <a href="#fiyat" style="--i:3">Fiyatlandırma</a>
+      <a href="#sss" style="--i:4">SSS</a>
+    </nav>
+    <a href="/app.html" class="btn btn-primary btn-lg btn-block" style="--i:5">Ücretsiz CV Analizi <svg class="ico"><use href="/icons.svg#arrow-right"/></svg></a>
+  </div>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy page-enter">
+          <span class="badge" style="animation-delay:.05s"><span class="badge-dot"></span>Claude yapay zekâsı ile güçlendirildi</span>
+          <h1 style="animation-delay:.15s">
+            CV'ni yapay zekâyla<br>
+            <span class="rotator-wrap"><span class="rotator gradient-text" data-words='["ATS&apos;ye hazırla","ilana uyarla","mülakata taşı","öne çıkar"]'>ATS'ye hazırla</span><span class="caret" aria-hidden="true"></span></span>
+          </h1>
+          <p class="lead" style="animation-delay:.3s">
+            CVPilot özgeçmişini saniyeler içinde analiz eder, eksik anahtar kelimeleri bulur, iş ilanına göre yeniden yazar ve ön yazını hazırlar. Tüm başvurularını tek panelden takip et.
+          </p>
+          <div class="hero-actions" style="animation-delay:.45s">
+            <a href="/app.html#analiz" class="btn btn-primary btn-lg magnetic"><svg class="ico"><use href="/icons.svg#scan"/></svg>Ücretsiz CV Analizi</a>
+            <a href="#nasil" class="btn btn-ghost btn-lg">Nasıl çalışır?</a>
+          </div>
+          <ul class="hero-trust" style="animation-delay:.6s">
+            <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Kredi kartı gerekmez</li>
+            <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>KVKK &amp; GDPR uyumlu</li>
+            <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>PDF · DOCX · TXT</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="mock-cv tilt">
+            <div class="mock-top">
+              <div class="mock-avatar"></div>
+              <div class="mock-id">
+                <div class="sk w70 strong"></div>
+                <div class="sk w45"></div>
+              </div>
+              <span class="mock-pill">CV.pdf</span>
+            </div>
+            <div class="mock-sec">
+              <div class="sk-title"></div>
+              <div class="sk w95"></div><div class="sk w80"></div>
+            </div>
+            <div class="mock-sec">
+              <div class="sk-title"></div>
+              <div class="mock-kws">
+                <span class="kw" style="--k:0">React</span><span class="kw" style="--k:1">TypeScript</span><span class="kw" style="--k:2">Node.js</span><span class="kw miss" style="--k:3">CI/CD</span><span class="kw" style="--k:4">SQL</span>
+              </div>
+            </div>
+            <div class="mock-sec">
+              <div class="sk-title"></div>
+              <div class="sk w90 bullet"></div><div class="sk w75 bullet"></div><div class="sk w85 bullet"></div>
+            </div>
+            <div class="scan-beam"></div>
+          </div>
+
+          <div class="float-card score-card">
+            <svg viewBox="0 0 120 120" class="ring">
+              <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+              <circle cx="60" cy="60" r="50" class="ring-bg"/>
+              <circle cx="60" cy="60" r="50" class="ring-fg" id="heroRing"/>
+            </svg>
+            <div class="score-num"><b id="heroScore">41</b><small>ATS Puanı</small></div>
+          </div>
+
+          <div class="float-card note-card ok">
+            <span class="note-ico"><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg></span>
+            <div><b>"TypeScript" eklendi</b><small>Anahtar kelime eşleşti</small></div>
+          </div>
+          <div class="float-card note-card warn">
+            <span class="note-ico"><svg class="ico ico-sm"><use href="/icons.svg#alert"/></svg></span>
+            <div><b>Eksik: CI/CD</b><small>İlanda 3 kez geçiyor</small></div>
+          </div>
+          <div class="float-card match-card">
+            <div class="match-row"><span>İlan eşleşmesi</span><b>%87</b></div>
+            <div class="bar"><i></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container hero-stats reveal">
+        <div class="stat"><b data-count="30" data-prefix="≈" data-suffix=" sn">0</b><span>ortalama analiz süresi</span></div>
+        <div class="stat"><b data-count="5">0</b><span>güçlü araç tek panelde</span></div>
+        <div class="stat"><b data-count="100" data-prefix="%">0</b><span>ATS dostu çıktı biçimi</span></div>
+        <div class="stat"><b data-count="2" data-suffix=" dil">0</b><span>Türkçe &amp; İngilizce CV</span></div>
+      </div>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>ATS Puanlama</span><i>✦</i><span>Anahtar Kelime Analizi</span><i>✦</i><span>İlana Özel CV</span><i>✦</i><span>Ön Yazı Oluşturucu</span><i>✦</i><span>Başvuru Takibi</span><i>✦</i><span>İş Eşleştirme</span><i>✦</i><span>DOCX &amp; PDF</span><i>✦</i>
+        <span>ATS Puanlama</span><i>✦</i><span>Anahtar Kelime Analizi</span><i>✦</i><span>İlana Özel CV</span><i>✦</i><span>Ön Yazı Oluşturucu</span><i>✦</i><span>Başvuru Takibi</span><i>✦</i><span>İş Eşleştirme</span><i>✦</i><span>DOCX &amp; PDF</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ================= ÖZELLİKLER ================= -->
+    <section class="section" id="ozellikler">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Temel Özellikler</span>
+          <h2>İşe alım sürecinin her adımı için <span class="gradient-text">tek bir yapay zekâ</span></h2>
+          <p>CV'ni elemelerden geçirmekten mülakat takvimini yönetmeye kadar ihtiyacın olan her şey burada.</p>
+        </div>
+
+        <div class="bento">
+          <a href="/app.html#analiz" class="feature card spotlight span-2 reveal" style="--d:0">
+            <div class="feature-body">
+              <span class="f-ico"><svg class="ico"><use href="/icons.svg#scan"/></svg></span>
+              <h3>ATS Uyumlu CV Optimizasyonu</h3>
+              <p>Aday Takip Sistemleri tarafından elenmemen için CV'ni analiz eder. Eksik anahtar kelimeleri tespit eder, 5 kategoride puanlar ve cümle cümle düzenleme önerileri sunar.</p>
+              <span class="f-link">CV'mi analiz et <svg class="ico ico-sm"><use href="/icons.svg#arrow-right"/></svg></span>
+            </div>
+            <div class="f-visual v-ats">
+              <div class="mini-gauge"><svg viewBox="0 0 100 60"><path d="M10 55a40 40 0 0 1 80 0" class="g-bg"/><path d="M10 55a40 40 0 0 1 80 0" class="g-fg"/></svg><b>88</b></div>
+              <div class="mini-bars">
+                <div><span>Anahtar kelime</span><i style="--w:86%"></i></div>
+                <div><span>Biçim</span><i style="--w:94%"></i></div>
+                <div><span>Etki</span><i style="--w:72%"></i></div>
+              </div>
+              <div class="mini-chips">
+                <span class="chip chip-green">✓ Python</span><span class="chip chip-green">✓ SQL</span><span class="chip chip-red">✕ Docker</span><span class="chip chip-green">✓ Agile</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="/app.html#uyarla" class="feature card spotlight reveal" style="--d:100">
+            <div class="feature-body">
+              <span class="f-ico pink"><svg class="ico"><use href="/icons.svg#wand"/></svg></span>
+              <h3>İlana Özel Özelleştirme</h3>
+              <p>İlan metnini analiz eder; deneyim ve yetkinliklerini doğrudan o pozisyonun gereksinimlerine göre yeniden yapılandırır.</p>
+            </div>
+            <div class="f-visual v-tailor">
+              <div class="diff del">Satış işlerinden sorumluydum.</div>
+              <div class="diff add">B2B satış hedefini [%X] aşarak bölgede 1. oldum.</div>
+            </div>
+          </a>
+
+          <a href="/app.html#onyazi" class="feature card spotlight reveal" style="--d:200">
+            <div class="feature-body">
+              <span class="f-ico cyan"><svg class="ico"><use href="/icons.svg#mail"/></svg></span>
+              <h3>Ön Yazı Oluşturucu</h3>
+              <p>İlanın tonuna ve CV içeriğine uygun, sana özel ön yazıları saniyeler içinde canlı olarak yazar.</p>
+            </div>
+            <div class="f-visual v-letter">
+              <div class="type-line" style="--n:1"></div>
+              <div class="type-line" style="--n:2"></div>
+              <div class="type-line short" style="--n:3"></div>
+            </div>
+          </a>
+
+          <a href="/app.html#takip" class="feature card spotlight reveal" style="--d:100">
+            <div class="feature-body">
+              <span class="f-ico amber"><svg class="ico"><use href="/icons.svg#board"/></svg></span>
+              <h3>Başvuru Takip Paneli</h3>
+              <p>Gönderdiğin başvuruları, mülakat tarihlerini ve süreç durumlarını tek bir kontrol panelinden yönet.</p>
+            </div>
+            <div class="f-visual v-kanban">
+              <div class="col"><i></i><i></i></div>
+              <div class="col"><i></i><i class="moving"></i></div>
+              <div class="col"><i></i></div>
+            </div>
+          </a>
+
+          <a href="/app.html#eslesme" class="feature card spotlight span-2 reveal" style="--d:200">
+            <div class="feature-body">
+              <span class="f-ico green"><svg class="ico"><use href="/icons.svg#target"/></svg></span>
+              <h3>Yapay Zekâ ile İş Eşleştirme</h3>
+              <p>Profiline ve tercihlerine göre sana en uygun pozisyonları ve ilanları puanlayarak listeler; nedenlerini ve eksiklerini açıklar.</p>
+              <span class="f-link">Bana uygun işleri bul <svg class="ico ico-sm"><use href="/icons.svg#arrow-right"/></svg></span>
+            </div>
+            <div class="f-visual v-match">
+              <div class="job"><span class="j-logo">F</span><div><b>Frontend Developer</b><small>Uzaktan · İstanbul</small></div><em style="--s:92">%92</em></div>
+              <div class="job"><span class="j-logo c2">D</span><div><b>Data Analyst</b><small>Hibrit · Ankara</small></div><em style="--s:78">%78</em></div>
+              <div class="job"><span class="j-logo c3">P</span><div><b>Product Specialist</b><small>Ofis · İzmir</small></div><em style="--s:61">%61</em></div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NASIL ÇALIŞIR ================= -->
+    <section class="section" id="nasil">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Nasıl Çalışır?</span>
+          <h2>Dört adımda <span class="gradient-text">mülakata hazır</span> bir başvuru</h2>
+        </div>
+        <ol class="steps" id="steps">
+          <li class="step reveal from-left">
+            <span class="step-num">1</span>
+            <div class="step-card card">
+              <span class="f-ico"><svg class="ico"><use href="/icons.svg#upload"/></svg></span>
+              <h3>CV Yükleme</h3>
+              <p>Mevcut özgeçmişini PDF, DOCX veya TXT olarak sürükleyip bırak. Taranmış CV'leri bile okur.</p>
+            </div>
+          </li>
+          <li class="step reveal from-right">
+            <span class="step-num">2</span>
+            <div class="step-card card">
+              <span class="f-ico pink"><svg class="ico"><use href="/icons.svg#briefcase"/></svg></span>
+              <h3>İş İlanı Ekleme</h3>
+              <p>Başvurmak istediğin pozisyonun açıklamasını yapıştır. Aranan nitelikler otomatik çıkarılır.</p>
+            </div>
+          </li>
+          <li class="step reveal from-left">
+            <span class="step-num">3</span>
+            <div class="step-card card">
+              <span class="f-ico cyan"><svg class="ico"><use href="/icons.svg#sparkles"/></svg></span>
+              <h3>Analiz ve Düzenleme</h3>
+              <p>Yapay zekâ ilandaki nitelikleri profilinle eşleştirir; optimize edilmiş CV ve ön yazı taslağı oluşturur.</p>
+            </div>
+          </li>
+          <li class="step reveal from-right">
+            <span class="step-num">4</span>
+            <div class="step-card card">
+              <span class="f-ico green"><svg class="ico"><use href="/icons.svg#download"/></svg></span>
+              <h3>Takip ve İndirme</h3>
+              <p>Belgeleri ATS dostu DOCX/PDF olarak indir, başvurunu tek tıkla takip paneline kaydet.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= ÖNCE / SONRA ================= -->
+    <section class="section compare-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Yapay Zekâ Farkı</span>
+          <h2>Aynı deneyim, <span class="gradient-text">bambaşka bir etki</span></h2>
+          <p>Çizgiyi sürükle ve CVPilot'un sıradan maddeleri nasıl güçlü, ölçülebilir başarılara dönüştürdüğünü gör.</p>
+        </div>
+        <div class="compare reveal zoom" id="compare" style="--pos:50%">
+          <div class="cmp-pane before">
+            <div class="cmp-head"><span class="chip chip-red">Önce</span><b class="cmp-score bad">54</b></div>
+            <h4>Satış Temsilcisi · ABC Ltd.</h4>
+            <ul>
+              <li>Müşterilerle ilgilenmekten sorumluydum.</li>
+              <li>Satış raporları hazırladım.</li>
+              <li>Yeni müşteri bulmaya yardımcı oldum.</li>
+              <li>CRM programı kullandım.</li>
+            </ul>
+          </div>
+          <div class="cmp-pane after">
+            <div class="cmp-head"><span class="chip chip-green">Sonra</span><b class="cmp-score good">91</b></div>
+            <h4>Satış Temsilcisi · ABC Ltd.</h4>
+            <ul>
+              <li>120+ kurumsal müşteri portföyünü yöneterek yıllık yenileme oranını <mark>%18 artırdım</mark>.</li>
+              <li>Haftalık <mark>Salesforce CRM</mark> raporlarıyla satış hunisini analiz edip yönetime sundum.</li>
+              <li>Soğuk arama stratejisi geliştirerek çeyrekte <mark>35 yeni B2B müşteri</mark> kazandırdım.</li>
+              <li>Ekip içi <mark>KPI</mark> takibini otomatikleştirip raporlama süresini yarıya indirdim.</li>
+            </ul>
+          </div>
+          <div class="cmp-handle" aria-hidden="true"><span><svg class="ico ico-sm"><use href="/icons.svg#arrow-left"/></svg><svg class="ico ico-sm"><use href="/icons.svg#arrow-right"/></svg></span></div>
+          <input type="range" min="0" max="100" value="50" class="cmp-range" aria-label="Önce ve sonra karşılaştırma kaydırıcısı">
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GÜVENLİK ================= -->
+    <section class="section" id="guvenlik">
+      <div class="container security">
+        <div class="security-copy">
+          <div class="section-head left reveal">
+            <span class="eyebrow">Güvenlik ve Model Yapısı</span>
+            <h2>Verilerin <span class="gradient-text">sana ait</span>. Nokta.</h2>
+            <p>Gizlilik ve GDPR uyumu ürünün merkezinde. CV'n yalnızca senin işini görmek için işlenir.</p>
+          </div>
+          <div class="sec-grid">
+            <div class="sec-item card reveal" style="--d:0">
+              <span class="f-ico"><svg class="ico"><use href="/icons.svg#server"/></svg></span>
+              <div><h3>Avrupa sunucuları</h3><p>Veriler Avrupa'daki sunucularda tutulur, aktarımda ve depolamada şifrelenir.</p></div>
+            </div>
+            <div class="sec-item card reveal" style="--d:100">
+              <span class="f-ico cyan"><svg class="ico"><use href="/icons.svg#cpu"/></svg></span>
+              <div><h3>Model eğitimi yok</h3><p>Verilerin harici yapay zekâ modellerini eğitmek amacıyla kullanılmaz.</p></div>
+            </div>
+            <div class="sec-item card reveal" style="--d:200">
+              <span class="f-ico pink"><svg class="ico"><use href="/icons.svg#ban"/></svg></span>
+              <div><h3>Asla satılmaz</h3><p>Kişisel verilerin hiçbir üçüncü tarafa satılmaz veya paylaşılmaz.</p></div>
+            </div>
+            <div class="sec-item card reveal" style="--d:300">
+              <span class="f-ico green"><svg class="ico"><use href="/icons.svg#trash"/></svg></span>
+              <div><h3>Kontrol sende</h3><p>GDPR kapsamındaki haklarınla tüm verilerini tek tıkla silebilirsin.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="shield-visual reveal zoom" aria-hidden="true">
+          <div class="orbit o1"><i></i></div>
+          <div class="orbit o2"><i></i></div>
+          <div class="orbit o3"><i></i></div>
+          <div class="shield-core">
+            <svg class="ico"><use href="/icons.svg#shield"/></svg>
+          </div>
+          <span class="tag t1">GDPR</span><span class="tag t2">KVKK</span><span class="tag t3">AB Sunucuları</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FİYATLANDIRMA ================= -->
+    <section class="section" id="fiyat">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Ücretlendirme</span>
+          <h2>Ücretsiz dene, <span class="gradient-text">hazır olduğunda</span> yükselt</h2>
+          <p>Temel deneme sürümüyle başla; sınırsız optimizasyon için abonelik veya paket seç.</p>
+          <div class="billing-toggle" role="group" aria-label="Faturalama dönemi">
+            <button class="active" data-billing="monthly">Aylık</button>
+            <button data-billing="yearly">Yıllık <span class="save">%20 indirim</span></button>
+            <span class="toggle-pill"></span>
+          </div>
+        </div>
+
+        <div class="pricing">
+          <article class="plan card spotlight reveal" style="--d:0">
+            <h3>Başlangıç</h3>
+            <p class="plan-desc">Ürünü keşfetmek için</p>
+            <div class="price"><b data-monthly="0" data-yearly="0">0</b><span>₺ / ay</span></div>
+            <ul>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Ayda 3 ATS analizi</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>1 ilana özel CV optimizasyonu</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>1 ön yazı</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>10 başvuruya kadar takip</li>
+            </ul>
+            <a href="/app.html" class="btn btn-ghost btn-block">Ücretsiz başla</a>
+          </article>
+
+          <article class="plan card spotlight featured reveal" style="--d:120">
+            <span class="plan-badge">En popüler</span>
+            <h3>Pro</h3>
+            <p class="plan-desc">Aktif iş arayanlar için</p>
+            <div class="price"><b data-monthly="149" data-yearly="119">149</b><span>₺ / ay</span></div>
+            <ul>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Sınırsız ATS analizi &amp; optimizasyon</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Sınırsız ön yazı</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Yapay zekâ ile iş eşleştirme</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Sınırsız başvuru takibi</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>DOCX &amp; PDF indirme</li>
+            </ul>
+            <a href="/app.html" class="btn btn-primary btn-block magnetic">Pro'ya geç</a>
+          </article>
+
+          <article class="plan card spotlight reveal" style="--d:240">
+            <h3>Kariyer+</h3>
+            <p class="plan-desc">Kariyerini hızlandırmak isteyenler için</p>
+            <div class="price"><b data-monthly="249" data-yearly="199">249</b><span>₺ / ay</span></div>
+            <ul>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Pro'daki her şey</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>5 farklı CV profili</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>İngilizce &amp; Türkçe çift CV</li>
+              <li><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Öncelikli destek</li>
+            </ul>
+            <a href="/app.html" class="btn btn-ghost btn-block">Kariyer+ seç</a>
+          </article>
+        </div>
+
+        <div class="pack card reveal">
+          <span class="f-ico amber"><svg class="ico"><use href="/icons.svg#layers"/></svg></span>
+          <div><h3>Abonelik istemiyor musun?</h3><p>10 optimizasyon kredisi içeren tek seferlik paket — süresiz kullan.</p></div>
+          <div class="pack-price"><b>99 ₺</b><a href="/app.html" class="btn btn-soft btn-sm">Paketi al</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SSS ================= -->
+    <section class="section" id="sss">
+      <div class="container narrow">
+        <div class="section-head reveal">
+          <span class="eyebrow">Sıkça Sorulan Sorular</span>
+          <h2>Aklına takılanlar</h2>
+        </div>
+        <div class="faq">
+          <details class="faq-item reveal" open>
+            <summary>ATS nedir, CV'm neden elenir?<span class="faq-ico"><svg class="ico"><use href="/icons.svg#plus"/></svg></span></summary>
+            <div class="faq-body"><div><p>ATS (Aday Takip Sistemi), şirketlerin başvuruları otomatik olarak tarayıp sıraladığı yazılımdır. CV'nde ilanla eşleşen anahtar kelimeler yoksa ya da tablo, görsel, ikon gibi okunamayan öğeler kullanılmışsa, CV'n bir insana ulaşmadan elenebilir.</p></div></div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Yapay zekâ CV'mde olmayan bilgiler ekler mi?<span class="faq-ico"><svg class="ico"><use href="/icons.svg#plus"/></svg></span></summary>
+            <div class="faq-body"><div><p>Hayır. CVPilot şirket, unvan, tarih, eğitim gibi bilgileri asla uydurmaz. Bir başarıyı sayıyla güçlendirmek gerektiğinde <code>[%X]</code> gibi bir yer tutucu bırakır; gerçek değeri sen doldurursun.</p></div></div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Hangi dosya formatlarını yükleyebilirim?<span class="faq-ico"><svg class="ico"><use href="/icons.svg#plus"/></svg></span></summary>
+            <div class="faq-body"><div><p>PDF, DOCX ve TXT dosyalarını doğrudan okuyoruz. Taranmış PDF'leri ve CV fotoğraflarını (PNG/JPG) yapay zekâ ile metne çeviriyoruz — ancak başvuruda metin tabanlı dosya kullanmanı öneririz.</p></div></div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Verilerim güvende mi?<span class="faq-ico"><svg class="ico"><use href="/icons.svg#plus"/></svg></span></summary>
+            <div class="faq-body"><div><p>Veriler Avrupa sunucularında şifreli olarak tutulur, harici modelleri eğitmek için kullanılmaz ve satılmaz. İstediğin an tüm verilerini silebilirsin.</p></div></div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>İngilizce CV ve ilanları destekliyor musunuz?<span class="faq-ico"><svg class="ico"><use href="/icons.svg#plus"/></svg></span></summary>
+            <div class="faq-body"><div><p>Evet. CV'ni ve ilanı Türkçe ya da İngilizce yükleyebilir, çıktının dilini seçebilirsin. Türkçe bir CV'yi İngilizce bir ilana göre İngilizce olarak yeniden yazdırmak da mümkün.</p></div></div>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Ücretsiz planda neler yapabilirim?<span class="faq-ico"><svg class="ico"><use href="/icons.svg#plus"/></svg></span></summary>
+            <div class="faq-body"><div><p>Ayda 3 ATS analizi, 1 ilana özel optimizasyon ve 1 ön yazı hakkın var. Başvuru takip panelini 10 başvuruya kadar ücretsiz kullanabilirsin.</p></div></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-band reveal zoom">
+          <div class="cta-glow" aria-hidden="true"></div>
+          <h2>Bir sonraki mülakatın<br><span class="gradient-text">bir CV uzağında.</span></h2>
+          <p>CV'ni yükle, 30 saniyede ATS puanını öğren.</p>
+          <a href="/app.html#analiz" class="btn btn-primary btn-lg magnetic"><svg class="ico"><use href="/icons.svg#zap"/></svg>Hemen ücretsiz başla</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="/" class="brand"><svg class="brand-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="url(#lg1)"/><path d="M10 8.5h8l4 4V23a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 9 23V10a1.5 1.5 0 0 1 1-1.5z" fill="#fff" opacity=".95"/><path d="M12.5 17.2l2.4 2.4 4.6-5" fill="none" stroke="#6d28d9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>CV<b>Pilot</b></span></a>
+      <nav class="footer-links">
+        <a href="#ozellikler">Özellikler</a><a href="#fiyat">Fiyatlandırma</a><a href="#guvenlik">Gizlilik</a><a href="/app.html">Uygulama</a>
+      </nav>
+      <p class="copy">© 2026 CVPilot. Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
+
+  <script src="/js/landing.js" defer></script>
+</body>
+</html>

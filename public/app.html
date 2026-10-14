@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070716">
+  <meta name="description" content="CVPilot uygulaması: CV analizi, ilana özel CV, ön yazı, başvuru takibi ve iş eşleştirme.">
+  <title>CVPilot — Uygulama</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="app">
+  <div class="app-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="lgLogo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+      <symbol id="brandLogo" viewBox="0 0 32 32">
+        <rect width="32" height="32" rx="9" fill="url(#lgLogo)"/>
+        <path d="M10 8.5h8l4 4V23a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 9 23V10a1.5 1.5 0 0 1 1-1.5z" fill="#fff" opacity=".95"/>
+        <path d="M12.5 17.2l2.4 2.4 4.6-5" fill="none" stroke="#6d28d9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ================= Kenar çubuğu (masaüstü) ================= -->
+  <aside class="sidebar">
+    <a href="/" class="brand"><svg class="brand-logo"><use href="#brandLogo"/></svg><span>CV<b>Pilot</b></span></a>
+    <nav class="side-nav" aria-label="Araçlar">
+      <span class="side-indicator" aria-hidden="true"></span>
+      <a href="#analiz" data-tab="analiz"><svg class="ico"><use href="/icons.svg#scan"/></svg><span>CV Analizi<small>ATS puanı ve öneriler</small></span></a>
+      <a href="#uyarla" data-tab="uyarla"><svg class="ico"><use href="/icons.svg#wand"/></svg><span>İlana Özel CV<small>Yeniden yapılandır</small></span></a>
+      <a href="#onyazi" data-tab="onyazi"><svg class="ico"><use href="/icons.svg#mail"/></svg><span>Ön Yazı<small>Kişiye özel mektup</small></span></a>
+      <a href="#takip" data-tab="takip"><svg class="ico"><use href="/icons.svg#board"/></svg><span>Başvuru Takibi<small>Kontrol paneli</small></span></a>
+      <a href="#eslesme" data-tab="eslesme"><svg class="ico"><use href="/icons.svg#target"/></svg><span>İş Eşleştirme<small>Sana uygun ilanlar</small></span></a>
+    </nav>
+    <div class="side-cv" data-cv-summary></div>
+    <div class="side-foot">
+      <span class="ai-pill" data-ai-pill><i></i><span>Kontrol ediliyor…</span></span>
+      <a href="/" class="side-home"><svg class="ico ico-sm"><use href="/icons.svg#home"/></svg>Ana sayfa</a>
+    </div>
+  </aside>
+
+  <!-- ================= Üst çubuk (mobil) ================= -->
+  <header class="topbar">
+    <a href="/" class="brand"><svg class="brand-logo"><use href="#brandLogo"/></svg><span>CV<b>Pilot</b></span></a>
+    <div class="topbar-right">
+      <span class="ai-pill compact" data-ai-pill><i></i><span>…</span></span>
+      <button class="btn btn-ghost btn-sm" data-open-cv><svg class="ico ico-sm"><use href="/icons.svg#file"/></svg><span data-cv-short>CV</span></button>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+    <div class="ai-banner hidden" data-ai-banner>
+      <span class="f-ico amber"><svg class="ico"><use href="/icons.svg#key"/></svg></span>
+      <div>
+        <b>Demo modundasınız</b>
+        <p>CV analizi kural tabanlı çalışıyor. Yapay zekâ ile yeniden yazım, ön yazı ve iş eşleştirme için proje klasöründeki <code>.env</code> dosyasına <code>ANTHROPIC_API_KEY</code> ekleyip sunucuyu yeniden başlatın.</p>
+      </div>
+      <button class="btn-icon btn btn-ghost" data-close-banner aria-label="Kapat"><svg class="ico ico-sm"><use href="/icons.svg#x"/></svg></button>
+    </div>
+
+    <!-- ================= 1) CV ANALİZİ ================= -->
+    <section class="panel" id="panel-analiz" data-panel="analiz" aria-labelledby="h-analiz">
+      <header class="panel-head">
+        <span class="eyebrow">ATS Uyumlu CV Optimizasyonu</span>
+        <h1 id="h-analiz">CV'ni <span class="gradient-text">analiz et</span></h1>
+        <p>CV'ni yükle, istersen başvuracağın ilanı ekle. Yapay zekâ ATS puanını hesaplasın, eksik anahtar kelimeleri bulsun ve düzeltmeleri önersin.</p>
+      </header>
+
+      <div class="grid-2">
+        <div class="card pad">
+          <div class="step-label"><span>1</span>CV'ni yükle</div>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="CV dosyası seç veya sürükle">
+            <div class="dz-idle">
+              <div class="dz-ico"><svg class="ico ico-lg"><use href="/icons.svg#upload"/></svg></div>
+              <b>Dosyayı sürükle bırak veya <u>seç</u></b>
+              <small>PDF, DOCX, TXT, PNG/JPG · en fazla 10 MB</small>
+            </div>
+            <div class="dz-busy">
+              <div class="dz-doc"><span></span><span></span><span></span><i class="dz-beam"></i></div>
+              <b data-dz-status>Dosya okunuyor…</b>
+              <div class="dz-bar"><i></i></div>
+            </div>
+          </div>
+          <div class="cv-loaded hidden" data-cv-loaded></div>
+          <button class="link-btn" data-paste-cv><svg class="ico ico-sm"><use href="/icons.svg#pen"/></svg>Dosya yerine metni yapıştır</button>
+        </div>
+
+        <div class="card pad">
+          <div class="step-label"><span>2</span>İş ilanı <em>(isteğe bağlı)</em></div>
+          <div class="field">
+            <textarea class="textarea" data-bind="job" rows="7" placeholder="Başvurmak istediğin ilanın metnini buraya yapıştır. Boş bırakırsan CV'n hedeflediğin pozisyona göre genel olarak değerlendirilir."></textarea>
+          </div>
+          <button class="btn btn-primary btn-lg btn-block mt" id="analyzeBtn">
+            <span class="spinner"></span><svg class="ico btn-label-icon"><use href="/icons.svg#sparkles"/></svg>ATS Analizini Başlat
+          </button>
+        </div>
+      </div>
+
+      <div class="results" id="analyzeResults"></div>
+    </section>
+
+    <!-- ================= 2) İLANA ÖZEL CV ================= -->
+    <section class="panel" id="panel-uyarla" data-panel="uyarla" aria-labelledby="h-uyarla">
+      <header class="panel-head">
+        <span class="eyebrow">İlana Özel Özelleştirme</span>
+        <h1 id="h-uyarla">CV'ni ilana göre <span class="gradient-text">yeniden yaz</span></h1>
+        <p>Yapay zekâ ilandaki gereksinimleri çıkarır; deneyim ve yetkinliklerini o pozisyona göre yeniden yapılandırır. Bilgi uydurmaz, eksik sayılar için <code>[%X]</code> gibi yer tutucu bırakır.</p>
+      </header>
+      <div class="cv-bar" data-cv-bar></div>
+      <div class="card pad">
+        <div class="field">
+          <label class="label" for="tailorJob">İş ilanı metni <small>Boş bırakırsan genel ATS optimizasyonu yapılır</small></label>
+          <textarea class="textarea" id="tailorJob" data-bind="job" rows="7" placeholder="İlan metnini yapıştır…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label class="label" for="tailorLang">CV dili</label>
+            <select class="select" id="tailorLang">
+              <option value="auto">Otomatik (orijinal dil)</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">İngilizce</option>
+            </select>
+          </div>
+          <div class="field grow">
+            <label class="label" for="tailorExtra">Ek talimat <small>isteğe bağlı</small></label>
+            <input class="input" id="tailorExtra" placeholder="Örn. Liderlik deneyimimi öne çıkar, tek sayfa olsun">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block mt" id="tailorBtn">
+          <span class="spinner"></span><svg class="ico btn-label-icon"><use href="/icons.svg#wand"/></svg>CV'mi Yeniden Yaz
+        </button>
+      </div>
+      <div class="results" id="tailorResults"></div>
+    </section>
+
+    <!-- ================= 3) ÖN YAZI ================= -->
+    <section class="panel" id="panel-onyazi" data-panel="onyazi" aria-labelledby="h-onyazi">
+      <header class="panel-head">
+        <span class="eyebrow">Ön Yazı (Cover Letter) Oluşturucu</span>
+        <h1 id="h-onyazi">İlana özel <span class="gradient-text">ön yazı</span></h1>
+        <p>İlanın tonuna ve CV içeriğine uygun, klişelerden uzak bir ön yazı canlı olarak yazılsın.</p>
+      </header>
+      <div class="cv-bar" data-cv-bar></div>
+      <div class="card pad">
+        <div class="field">
+          <label class="label" for="letterJob">İş ilanı metni <small>zorunlu</small></label>
+          <textarea class="textarea" id="letterJob" data-bind="job" rows="6" placeholder="İlan metnini yapıştır…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field grow">
+            <label class="label" for="letterCompany">Şirket adı</label>
+            <input class="input" id="letterCompany" placeholder="Örn. Acme Teknoloji">
+          </div>
+          <div class="field grow">
+            <label class="label" for="letterManager">Yetkili kişi <small>isteğe bağlı</small></label>
+            <input class="input" id="letterManager" placeholder="Örn. Ayşe Yılmaz">
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">Ton</span>
+          <div class="chip-group" id="letterTone" role="radiogroup" aria-label="Ön yazı tonu">
+            <button class="chip-opt active" data-value="otomatik" role="radio" aria-checked="true">✨ İlana uygun</button>
+            <button class="chip-opt" data-value="profesyonel" role="radio" aria-checked="false">Profesyonel</button>
+            <button class="chip-opt" data-value="samimi" role="radio" aria-checked="false">Samimi</button>
+            <button class="chip-opt" data-value="heyecanli" role="radio" aria-checked="false">Heyecanlı</button>
+            <button class="chip-opt" data-value="resmi" role="radio" aria-checked="false">Resmi</button>
+            <button class="chip-opt" data-value="yaratici" role="radio" aria-checked="false">Yaratıcı</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <span class="label">Uzunluk</span>
+            <div class="segmented" id="letterLength" role="radiogroup" aria-label="Uzunluk">
+              <button data-value="kisa" role="radio" aria-checked="false">Kısa</button>
+              <button data-value="orta" class="active" role="radio" aria-checked="true">Orta</button>
+              <button data-value="uzun" role="radio" aria-checked="false">Uzun</button>
+              <i class="seg-pill"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="letterLang">Dil</label>
+            <select class="select" id="letterLang">
+              <option value="auto">Otomatik (ilanın dili)</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">İngilizce</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="letterExtra">Eklemek istediklerin <small>isteğe bağlı</small></label>
+          <input class="input" id="letterExtra" placeholder="Örn. Şirketin sürdürülebilirlik projelerini takip ediyorum">
+        </div>
+        <button class="btn btn-primary btn-lg btn-block mt" id="letterBtn">
+          <span class="spinner"></span><svg class="ico btn-label-icon"><use href="/icons.svg#pen"/></svg>Ön Yazıyı Oluştur
+        </button>
+      </div>
+      <div class="results" id="letterResults"></div>
+    </section>
+
+    <!-- ================= 4) BAŞVURU TAKİBİ ================= -->
+    <section class="panel" id="panel-takip" data-panel="takip" aria-labelledby="h-takip">
+      <header class="panel-head row">
+        <div>
+          <span class="eyebrow">Başvuru Takip Paneli</span>
+          <h1 id="h-takip">Başvurularını <span class="gradient-text">yönet</span></h1>
+          <p>Gönderdiğin başvuruları, mülakat tarihlerini ve süreç durumlarını tek panelden takip et.</p>
+        </div>
+        <button class="btn btn-primary" data-new-app><svg class="ico"><use href="/icons.svg#plus"/></svg>Yeni Başvuru</button>
+      </header>
+
+      <div class="stats" id="trackerStats"></div>
+      <div class="upcoming" id="upcoming"></div>
+
+      <div class="board-tools">
+        <div class="search">
+          <svg class="ico ico-sm"><use href="/icons.svg#search"/></svg>
+          <input class="input" id="boardSearch" type="search" placeholder="Şirket veya pozisyon ara…" aria-label="Başvurularda ara">
+        </div>
+        <small class="hint-desktop">İpucu: kartları sürükleyerek durumunu değiştirebilirsin.</small>
+      </div>
+      <div class="board" id="board"></div>
+    </section>
+
+    <!-- ================= 5) İŞ EŞLEŞTİRME ================= -->
+    <section class="panel" id="panel-eslesme" data-panel="eslesme" aria-labelledby="h-eslesme">
+      <header class="panel-head">
+        <span class="eyebrow">Yapay Zekâ ile İş Eşleştirme</span>
+        <h1 id="h-eslesme">Sana en uygun <span class="gradient-text">işleri bul</span></h1>
+        <p>Profilin ve tercihlerine göre sana uygun pozisyonları öner; elindeki ilanları uyum puanına göre sırala.</p>
+      </header>
+      <div class="cv-bar" data-cv-bar></div>
+      <div class="grid-2">
+        <div class="card pad">
+          <div class="step-label"><span>1</span>Tercihlerin</div>
+          <div class="field">
+            <label class="label" for="prefRoles">Hedef pozisyon(lar)</label>
+            <input class="input" id="prefRoles" placeholder="Örn. Frontend Developer, UI Engineer">
+          </div>
+          <div class="form-row">
+            <div class="field grow">
+              <label class="label" for="prefLocation">Lokasyon</label>
+              <input class="input" id="prefLocation" placeholder="Örn. İstanbul">
+            </div>
+            <div class="field grow">
+              <label class="label" for="prefSeniority">Seviye</label>
+              <select class="select" id="prefSeniority">
+                <option value="">Fark etmez</option>
+                <option>Stajyer</option>
+                <option>Yeni mezun / Junior</option>
+                <option>Orta seviye</option>
+                <option>Kıdemli (Senior)</option>
+                <option>Yönetici / Lead</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Çalışma şekli</span>
+            <div class="chip-group multi" id="prefWork">
+              <button class="chip-opt" data-value="Uzaktan" aria-pressed="false">🏠 Uzaktan</button>
+              <button class="chip-opt" data-value="Hibrit" aria-pressed="false">🔁 Hibrit</button>
+              <button class="chip-opt" data-value="Ofis" aria-pressed="false">🏢 Ofis</button>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label" for="prefSalary">Maaş beklentisi <small>isteğe bağlı</small></label>
+            <input class="input" id="prefSalary" placeholder="Örn. 60.000 ₺ net">
+          </div>
+        </div>
+        <div class="card pad">
+          <div class="step-label"><span>2</span>İlanlar <em>(isteğe bağlı)</em></div>
+          <p class="muted small">Değerlendirmek istediğin ilanları ekle; her biri ayrı puanlanır. Boş bırakırsan sadece sana uygun pozisyonlar önerilir.</p>
+          <div class="job-list" id="jobList"></div>
+          <button class="btn btn-soft btn-sm" id="addJobBtn"><svg class="ico ico-sm"><use href="/icons.svg#plus"/></svg>İlan ekle</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block mt" id="matchBtn">
+        <span class="spinner"></span><svg class="ico btn-label-icon"><use href="/icons.svg#target"/></svg>Uygun İşleri Bul
+      </button>
+      <div class="results" id="matchResults"></div>
+    </section>
+  </main>
+
+  <!-- ================= Alt sekme çubuğu (mobil) ================= -->
+  <nav class="tabbar" aria-label="Araçlar">
+    <span class="tab-blob" aria-hidden="true"></span>
+    <a href="#analiz" data-tab="analiz"><svg class="ico"><use href="/icons.svg#scan"/></svg><span>Analiz</span></a>
+    <a href="#uyarla" data-tab="uyarla"><svg class="ico"><use href="/icons.svg#wand"/></svg><span>Uyarla</span></a>
+    <a href="#onyazi" data-tab="onyazi"><svg class="ico"><use href="/icons.svg#mail"/></svg><span>Ön Yazı</span></a>
+    <a href="#takip" data-tab="takip"><svg class="ico"><use href="/icons.svg#board"/></svg><span>Takip</span></a>
+    <a href="#eslesme" data-tab="eslesme"><svg class="ico"><use href="/icons.svg#target"/></svg><span>Eşleşme</span></a>
+  </nav>
+
+  <input type="file" id="fileInput" accept=".pdf,.docx,.txt,.md,.png,.jpg,.jpeg,.webp,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,image/*" hidden>
+
+  <!-- Sürükle-bırak katmanı -->
+  <div class="drop-overlay" id="dropOverlay" aria-hidden="true">
+    <div class="drop-box"><svg class="ico ico-lg"><use href="/icons.svg#upload"/></svg><b>CV'ni buraya bırak</b><small>PDF, DOCX, TXT veya görsel</small></div>
+  </div>
+
+  <!-- CV metni düzenleme penceresi -->
+  <div class="sheet" id="cvSheet" role="dialog" aria-modal="true" aria-labelledby="cvSheetTitle" hidden>
+    <div class="sheet-backdrop" data-close-sheet></div>
+    <div class="sheet-panel">
+      <div class="sheet-grab" aria-hidden="true"></div>
+      <header class="sheet-head">
+        <h2 id="cvSheetTitle">CV metni</h2>
+        <button class="btn btn-ghost btn-icon" data-close-sheet aria-label="Kapat"><svg class="ico"><use href="/icons.svg#x"/></svg></button>
+      </header>
+      <p class="muted small">ATS'nin gördüğü metin budur. Hatalı okunan yerleri düzeltebilir veya CV'ni doğrudan buraya yapıştırabilirsin.</p>
+      <textarea class="textarea mono" id="cvText" rows="16" placeholder="CV metnini buraya yapıştır…"></textarea>
+      <div class="sheet-actions">
+        <button class="btn btn-ghost" data-upload-cv><svg class="ico ico-sm"><use href="/icons.svg#upload"/></svg>Dosya yükle</button>
+        <button class="btn btn-danger" data-clear-data><svg class="ico ico-sm"><use href="/icons.svg#trash"/></svg>Yerel verileri sil</button>
+        <button class="btn btn-primary" id="saveCvText"><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Kaydet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Başvuru formu -->
+  <div class="sheet" id="appSheet" role="dialog" aria-modal="true" aria-labelledby="appSheetTitle" hidden>
+    <div class="sheet-backdrop" data-close-sheet></div>
+    <div class="sheet-panel">
+      <div class="sheet-grab" aria-hidden="true"></div>
+      <header class="sheet-head">
+        <h2 id="appSheetTitle">Yeni başvuru</h2>
+        <button class="btn btn-ghost btn-icon" data-close-sheet aria-label="Kapat"><svg class="ico"><use href="/icons.svg#x"/></svg></button>
+      </header>
+      <form id="appForm" class="app-form" novalidate>
+        <div class="form-row">
+          <div class="field grow"><label class="label" for="fCompany">Şirket</label><input class="input" id="fCompany" name="company" required autocomplete="off"></div>
+          <div class="field grow"><label class="label" for="fPosition">Pozisyon</label><input class="input" id="fPosition" name="position" required autocomplete="off"></div>
+        </div>
+        <div class="form-row">
+          <div class="field grow">
+            <label class="label" for="fStatus">Durum</label>
+            <select class="select" id="fStatus" name="status">
+              <option value="kaydedildi">Kaydedildi</option>
+              <option value="basvuruldu">Başvuruldu</option>
+              <option value="mulakat">Mülakat</option>
+              <option value="teklif">Teklif</option>
+              <option value="red">Olumsuz</option>
+            </select>
+          </div>
+          <div class="field grow"><label class="label" for="fLocation">Lokasyon</label><input class="input" id="fLocation" name="location" autocomplete="off"></div>
+        </div>
+        <div class="form-row">
+          <div class="field grow"><label class="label" for="fApplied">Başvuru tarihi</label><input class="input" type="date" id="fApplied" name="appliedAt"></div>
+          <div class="field grow"><label class="label" for="fInterview">Mülakat tarihi</label><input class="input" type="datetime-local" id="fInterview" name="interviewAt"></div>
+        </div>
+        <div class="form-row">
+          <div class="field grow"><label class="label" for="fUrl">İlan bağlantısı</label><input class="input" type="url" id="fUrl" name="url" placeholder="https://" autocomplete="off"></div>
+          <div class="field"><label class="label" for="fScore">Uyum puanı</label><input class="input" type="number" min="0" max="100" id="fScore" name="matchScore" placeholder="0-100"></div>
+        </div>
+        <div class="form-row">
+          <div class="field grow"><label class="label" for="fSalary">Maaş</label><input class="input" id="fSalary" name="salary" autocomplete="off"></div>
+          <div class="field grow"><label class="label" for="fContact">İletişim kişisi</label><input class="input" id="fContact" name="contact" autocomplete="off"></div>
+        </div>
+        <div class="field"><label class="label" for="fNotes">Notlar</label><textarea class="textarea" id="fNotes" name="notes" rows="3"></textarea></div>
+        <div class="sheet-actions">
+          <button type="button" class="btn btn-danger hidden" id="deleteApp"><svg class="ico ico-sm"><use href="/icons.svg#trash"/></svg>Sil</button>
+          <button type="button" class="btn btn-ghost hidden" id="icsApp"><svg class="ico ico-sm"><use href="/icons.svg#calendar"/></svg>Takvime ekle</button>
+          <button type="submit" class="btn btn-primary"><svg class="ico ico-sm"><use href="/icons.svg#check"/></svg>Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <div id="printRoot" aria-hidden="true"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
